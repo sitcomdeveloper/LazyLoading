@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private router: Router){}
+  hideElement = true;
+  constructor(private router: Router){
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.url === '/login') {
+          this.hideElement = true;
+        }  else {
+          this.hideElement = false;
+        }
+      }
+    });
+  }
   title = 'demo-project';
 }
+
+
+// constructor(private router: Router) {
+//   this.router.events.subscribe((event) => {
+//     if (event instanceof NavigationEnd) {
+//       if (event.url === '/login') {
+//         this.hideElement = true;
+//       }  else {
+//         this.hideElement = false;
+//       }
+//     }
+//   });
+// }
